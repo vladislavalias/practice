@@ -1,0 +1,50 @@
+html, body {
+margin: 0px;
+padding: 0px;
+height: 100%;
+}
+
+table {
+margin: 0px;
+padding: 0px;
+width: 100%;
+height: 100%;
+}
+
+td {
+width: 33%;
+height: 50%;
+}
+
+.text_top_one {
+border-bottom: 1px dashed red;
+font-family: Forte;
+font-size: 32px;
+}
+
+.text_top_one:hover {
+border-bottom: 0px;
+cursor: pointer;
+}
+
+.top_middle {
+background: url(images/top_one.jpg); 
+background-size: cover;
+}
+
+.top_middle:hover {
+background: url(images/top_two.jpg); 
+background-size: cover;
+}
+
+.low_middle {
+background: url(images/3.jpg); 
+background-repeat: no-repeat;
+background-size: contain;
+background-position: center top;
+}
+
+.top_left {
+padding-right: 20px;
+text-align: right;
+}
