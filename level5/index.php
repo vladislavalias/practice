@@ -3,33 +3,55 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-$mysql_host = '127.0.0.1';
-$mysql_login = 'root';
-$mysql_pass = 'psofroot';
+session_start(); 
 
-mysql_connect($mysql_host, $mysql_login, $mysql_pass);
-
-mysql_select_db('test_practic');
-
-if (!mysqlSelect('SELECT * FROM test WHERE name="skoda";'))
+require_once 'function.php';
+mysqlConnect();
+if (!isset($_SESSION['login']))
 {
-  mysql_query('INSERT INTO test (name, value) VALUES ("skoda", "superb");');
+  $_SESSION['login'] = 0;
 }
-mysql_query('UPDATE test set name = "valera" where id=2;');
 
 
-var_dump(mysqlSelect('SELECT * FROM test;'));
+$imgUnreg = '/level3_8/images/unregister.jpg';
+$imgReg = '/level3_8/images/login.jpg';
 
+$login = getFromPost('login');
+$pass  = md5(getFromPost('pass'));
 
-function mysqlSelect($query)
+if (logIn($login, $pass))
 {
-  $resultQuery  = mysql_query($query);
-  $result       = array();
-  
-  while($data = mysql_fetch_array($resultQuery)) 
+  $_SESSION['login'] = $login;
+}
+elseif ($login || $pass)
+{
+  echo 'Неправильный логин/пароль!';
+}
+
+if ($_SESSION['login'])
+{
+  echo 'Добро пожаловать, '.$_SESSION['login'];
+}
+
+if (!$_SESSION['login'])
+{
+  ?>
+  <form action="index.php" method="post">
+    Login: <input type="text" name="login" value="<?php echo getFromPost('login') ?>"><br />
+    Password: <input type="password" name="pass"><br />
+    <input type="submit">
+  </form>
+<a href="registration.php">Регистрация</a>
+  <?php
+}
+echo sprintf('<img src="%s">', $_SESSION['login'] ? $imgReg : $imgUnreg);
+?>
+
+<style type="text/css">
+  img
   {
-    $result[] = $data;
+    width: 500px;
   }
-  
-  return $result;
-}
+</style>
+
+<a href="logout.php">Выйти</a>
