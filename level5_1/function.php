@@ -1,4 +1,7 @@
-<?php 
+<?php
+header("content-type: text/html;charset=utf-8");
+session_start();
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
@@ -16,15 +19,14 @@ function getPagesLinks($num, $current)
   $result = array();
   for ($i=1; $i<=$num; $i++)
   {
-    $result[] = $i == $current ? $i : sprintf('<a href="?page=%d">%d</a>', $i, $i);
+    $result[] = $i == $current ? $i : sprintf('<a href="?id=%d&page=%d">%d</a>', filter_input(INPUT_GET, 'id'), $i, $i);
   }
-  
   return $result;
 }
 
 
 /**
- * Создать из массива сроку с заданным разделителем.
+ * Создать из массива строку с заданным разделителем.
  * 
  * @param array $array
  * @param string $format
@@ -140,7 +142,7 @@ function getDelimeterType()
  */
 function getContent($textArray, $currentPage, $onPage)
 {
-  $begin = $onPage * $currentPage - $onPage + 1;
+  $begin = $onPage * $currentPage - $onPage;
   
   return array_slice($textArray, $begin, $onPage);
 }
@@ -153,9 +155,9 @@ function getContent($textArray, $currentPage, $onPage)
  * @param string $type
  * @return array
  */
-function getTextByType($fileName, $type)
+function getTextByType($allText, $type)
 {
-  $text = is_readable($fileName) ? file_get_contents($fileName) : '';
+  $text = $allText ? $allText['text'] : '';
   switch ($type)
   {
     case 'words': 
@@ -191,32 +193,32 @@ function init(&$toWhat, $params, $force = false)
 
 function getFromSession($name, $default = false)
 {
-  return getFrom($_SESSION, $name, $default);
+  return isset($_SESSION[$name]) ? $_SESSION[$name] : $default;
 }
 
 function getFromGet($name, $default = false)
 {
-  return getFrom($_GET, $name, $default);
+  return getFrom(INPUT_GET, $name, $default);
 }
 
 function getFromPost($name, $default = false)
 {
-  return getFrom($_POST, $name, $default);
+  return getFrom(INPUT_POST, $name, $default);
 }
 
-function getFrom($array, $name, $default = false)
-{
-  return isset($array[$name]) ? $array[$name] : $default;
+function getFrom($getFrom, $name, $default = false)
+{   
+  return (filter_input($getFrom, $name)) ? filter_input($getFrom, $name) : $default;
 }
 
 /**
  * Отредиректить страницу на нужный пейдж если он передан постом.
  */
-function redirectOnPage()
+function redirectOnPage($id)
 {
   if ($page = getFromPost('current_page'))
   {
-    header(sprintf('Location: ?page=%s', $page));
+    header(sprintf('Location: ?id=%d&page=%s', getFromSession('id', 1), $page));
     exit();
   }
 }
@@ -231,4 +233,14 @@ function dump($var, $exit = true)
 {
   var_dump($var);
   $exit ? exit() : false;
+}
+
+function getBooks()
+{
+  return mysqlSelect('books');
+}
+
+function showText($text, $page)
+{
+  
 }

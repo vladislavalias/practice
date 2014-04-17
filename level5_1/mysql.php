@@ -25,9 +25,23 @@ function mysqlSelect($table, $fields = '*', $where = '1')
   $fields = is_string($fields) ? $fields : implode(',', $fields);
   $query = sprintf('SELECT %s FROM %s WHERE %s', $fields, $table, $where);
   $q = mysql_query($query);
+  $result = array();
   while ($data = mysql_fetch_array($q)) 
   {
     $result[] = $data;
   }
-  return $result;
+  
+  return $result; 
+}
+
+function mysqlSelectOne($table, $fields = '*', $where = '1')
+{
+  $result = mysqlSelect($table, $fields, $where);
+  
+  return 1 == sizeof($result) ? array_shift($result) : $result; 
+}
+
+function getTextFromSql($table, $id)
+{
+  return mysqlSelectOne($table, '*', sprintf('id = %s', $id));
 }

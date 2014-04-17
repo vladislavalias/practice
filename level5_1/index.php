@@ -8,8 +8,8 @@
   
   <body>
     <div class="mainpanel">
-      <table>
-        <?php $books = mysqlSelect('books') ?>
+      <table border="1">
+        <?php $books = getBooks() ?>
         <?php foreach ($books as $book): ?>
         <tr>
           <td><a href="reader.php?id=<?php echo $book['id'] ?>"><?php echo $book['name'] ?> </a></td>
