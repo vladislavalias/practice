@@ -1,0 +1,53 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 10.04.2014, 19:42:58
+    Author     : valias
+*/
+
+  input {
+    width: 25px;
+  }
+  form {
+    margin: 0px;
+    padding: 0px;
+  }
+  .text {
+    border: 1px solid black;
+    width: 600px;
+    height: auto;
+    margin: 0px auto;
+    padding: 10px;
+    text-align: justify;
+  }
+  .pages {
+    width: 622px;
+    height: auto;
+    margin: 0px auto;
+    padding: 0px auto;
+    text-align: center;
+    padding: 5px 0px;
+  }
+  .to-left {
+    float: left;
+    width: 30px;
+  }
+  .to-center {
+    float: left;
+    width: 540px;
+    overflow: hidden;
+  }
+  .to-right {
+    float: right;
+    width: 30px;
+  }
+  
+  .mainpanel {
+    width: 600px;
+    height: 200px;
+    margin: auto;
+    border-radius: 5px;
+  }
