@@ -19,7 +19,7 @@ and open the template in the editor.
     border: 1px solid black;
     width: 600px;
     height: auto;
-    margin: 0px auto;
+    margin: 20px auto 0px;
     padding: 10px;
     text-align: justify;
   }
@@ -50,4 +50,25 @@ and open the template in the editor.
     height: 200px;
     margin: auto;
     border-radius: 5px;
+  }
+  
+  .choose_books {
+    margin: 0px auto;
+    padding-top: 50px;
+    width: 200px;
+}
+
+  .button {
+    width: 60px;
+    border: 0px solid black;
+    border-radius: 5px;
+    background-color: grey;
+  }
+  
+  .button:hover {
+    cursor: pointer;
+    width: 60px;
+    border: 1px solid red;
+    border-radius: 5px;
+    background-color: red;
   }

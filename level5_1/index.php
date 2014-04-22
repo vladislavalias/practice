@@ -12,7 +12,12 @@
         <?php $books = getBooks() ?>
         <?php foreach ($books as $book): ?>
         <tr>
-          <td><a href="reader.php?id=<?php echo $book['id'] ?>"><?php echo $book['name'] ?> </a></td>
+          <td style="width: 235px">
+            <?php echo $book['name'].', '.$book['author'] ?> 
+            <span class="button">
+              <a href="reader.php?id=<?php echo $book['id'] ?>">Читать</a>
+            </span>
+          </td>
         </tr>
         <?php endforeach ?>
       </table>
