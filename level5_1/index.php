@@ -9,7 +9,7 @@
   <body>
     <div class="mainpanel">
       <table border="1">
-        <?php $books = mysqlSelect('books') ?>
+        <?php $books = getBooks() ?>
         <?php foreach ($books as $book): ?>
         <tr>
           <td><a href="reader.php?id=<?php echo $book['id'] ?>"><?php echo $book['name'] ?> </a></td>

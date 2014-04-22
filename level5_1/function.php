@@ -144,13 +144,6 @@ function getContent($textArray, $currentPage, $onPage)
 {
   $begin = $onPage * $currentPage - $onPage;
   
-//  давай считать он дейж у нас тут 5 умножаем на текущюу страницу 1
-//  минут он пейдж 5 + 1 
-  
-//  а че один? - 1 должно быть?
-//  вопросы есть?
-  //да) ща ппоикашижу
-  
   return array_slice($textArray, $begin, $onPage);
 }
 
@@ -164,7 +157,7 @@ function getContent($textArray, $currentPage, $onPage)
  */
 function getTextByType($allText, $type)
 {
-  $text = $allText ? $allText : '';
+  $text = $allText ? $allText['text'] : '';
   switch ($type)
   {
     case 'words': 
@@ -174,7 +167,6 @@ function getTextByType($allText, $type)
       $separator = '.';
     break;
   }
-//  ахтыж, мое тыришь?
   
   return array_diff(explode($separator, $text), array('', null, false));
 }
@@ -201,22 +193,22 @@ function init(&$toWhat, $params, $force = false)
 
 function getFromSession($name, $default = false)
 {
-  return getFrom($_SESSION, $name, $default);
+  return isset($_SESSION[$name]) ? $_SESSION[$name] : $default;
 }
 
 function getFromGet($name, $default = false)
 {
-  return getFrom($_GET, $name, $default);
+  return getFrom(INPUT_GET, $name, $default);
 }
 
 function getFromPost($name, $default = false)
 {
-  return getFrom($_POST, $name, $default);
+  return getFrom(INPUT_POST, $name, $default);
 }
 
-function getFrom($array, $name, $default = false)
+function getFrom($getFrom, $name, $default = false)
 {   
-  return isset($array[$name]) ? $array[$name] : $default;
+  return (filter_input($getFrom, $name)) ? filter_input($getFrom, $name) : $default;
 }
 
 /**
@@ -241,4 +233,14 @@ function dump($var, $exit = true)
 {
   var_dump($var);
   $exit ? exit() : false;
+}
+
+function getBooks()
+{
+  return mysqlSelect('books');
+}
+
+function showText($text, $page)
+{
+  
 }
