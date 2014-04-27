@@ -1,4 +1,5 @@
 <?php
+
 mysqlConnect();
 function mysqlConnect()
 {
@@ -14,12 +15,6 @@ function mysqlConnect()
   return true;
 }
 
-/**
- * 
- * @param type $table Название таблицы
- * @param type $fields
- * @param type $where
- */
 function mysqlSelect($table, $fields = '*', $where = '1')
 {
   $fields = is_string($fields) ? $fields : implode(',', $fields);
@@ -32,16 +27,4 @@ function mysqlSelect($table, $fields = '*', $where = '1')
   }
   
   return $result; 
-}
-
-function mysqlSelectOne($table, $fields = '*', $where = '1')
-{
-  $result = mysqlSelect($table, $fields, $where);
-  
-  return 1 == sizeof($result) ? array_shift($result) : $result; 
-}
-
-function getTextFromSql($table, $id)
-{
-  return mysqlSelectOne($table, '*', sprintf('id = %s', $id));
 }

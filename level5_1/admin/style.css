@@ -1,0 +1,53 @@
+.admin_panel {
+  border: 1px solid black;
+  margin: 100px auto;
+  width: 400px;
+  background-color: grey;
+}
+
+  td {
+    width: auto;
+    height: 40px;
+  }
+  
+  .info_book {
+      background-color: #c0c0c0;
+      margin-bottom: 2px;
+  }
+  
+  .info_book:hover {
+      background-color: grey;
+  }
+   
+  .mainpanel {
+    width: 600px;
+    height: 200px;
+    margin: 0px auto;
+    border-radius: 5px;
+  }
+  
+  .td_delete {
+      border-radius: 0px 15px 15px 0px;
+  }
+  
+  .td_delete:hover {
+      background-color: #222222;
+  }
+  
+  .td_read:hover {
+      background-color: #222222;
+  }
+  
+  html {
+      background-color: #AFD0FF;
+  }
+  
+  .text {
+      border: 1px solid black;
+      width: 600px;
+      height: 1000px;
+      margin: 20px auto 0px;
+      padding: 10px;
+      text-align: justify;
+      background-color: white;
+  }
