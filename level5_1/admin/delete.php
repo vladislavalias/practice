@@ -1,6 +1,6 @@
 <?php
-require_once 'function.php';
 require_once 'logVerification.php';
+require_once 'function.php';
 
 if (getFromGet('id'))
 {

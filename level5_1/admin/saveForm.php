@@ -1,6 +1,6 @@
 <?php
-require_once 'function.php';
 require_once 'logVerification.php';
+require_once 'function.php';
 
 if (getFromPost('name') || getFromPost('author') || getFromPost('text'))
 {
@@ -10,7 +10,7 @@ if (getFromPost('name') || getFromPost('author') || getFromPost('text'))
 
 if (getFromPost('add_name') && getFromPost('add_author') && getFromPost('add_text'))
 {
-    $query = sprintf('INSERT INTO books(`author`, `name`, `text`) VALUES (%s, %s, %s)', getFromPost('add_author'), getFromPost('add_name'), trim(getFromPost('add_text')));
+    $query = sprintf('INSERT INTO books(`author`, `name`, `text`) VALUES (\'%s\', \'%s\', \'%s\')', getFromPost('add_author'), getFromPost('add_name'), trim(getFromPost('add_text')));
     $q = mysql_query($query);
     echo 'Книга успешно добавлена';
 }

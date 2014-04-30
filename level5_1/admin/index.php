@@ -23,7 +23,7 @@ mysqlConnect();
 
     $login = filter_input(INPUT_POST, 'name');
     $pass  = filter_input(INPUT_POST, 'pass');
-    $where = $login ? sprintf('login="%s"', filter_input(INPUT_POST, 'name')) : 1;
+    $where = $login ? sprintf('admin="%s"', filter_input(INPUT_POST, 'name')) : 1;
     $authes  = mysqlSelect('admins', '*', $where);
     foreach ($authes as $auth)
     {
@@ -52,24 +52,24 @@ mysqlConnect();
             </td>
             <td class="td_read">
               <span>
-                  <a href="http://level5_1/reader.php?id=<?php echo $book['id'] ?>" style="color: white">Читать</a>
+                  <a href="/level5_1/reader.php?id=<?php echo $book['id'] ?>" style="color: white">Читать</a>
               </span>
             </td>
             <td class="td_read">
               <span>
-                  <a href="http://level5_1/admin/redact.php?id=<?php echo $book['id'] ?>" style="color: white">Редактировать</a>
+                  <a href="/level5_1/admin/redact.php?id=<?php echo $book['id'] ?>" style="color: white">Редактировать</a>
               </span>
             </td>
             <td class="td_delete">
               <span>
-                  <a href="http://level5_1/admin/delete.php?id=<?php echo $book['id'] ?>" style="color: white">Удалить</a>
+                  <a href="/level5_1/admin/delete.php?id=<?php echo $book['id'] ?>" style="color: white">Удалить</a>
               </span>
             </td>
           </tr>
           <?php endforeach ?>
           <td colspan="4">
             <span>
-              <a href="http://level5_1/admin/new_book.php" style="color: white; padding-left: 40%">Добавить новую книгу</a>
+              <a href="/level5_1/admin/new_book.php" style="color: white; padding-left: 40%">Добавить новую книгу</a>
             </span>
           </td>
         </table> 
@@ -101,6 +101,6 @@ mysqlConnect();
         <?php
     }
     ?>
-      <a href="http://level5_1/index.php">Войти как пользователь</a>
+      <a href="/level5_1/index.php">Войти как пользователь</a>
   </body>
 </html>

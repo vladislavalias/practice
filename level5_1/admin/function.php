@@ -1,4 +1,5 @@
 <?php
+
 require_once 'mysql.php';
 
 function getBooks()

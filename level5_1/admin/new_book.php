@@ -1,5 +1,5 @@
-<?php require_once 'function.php' ?>
 <?php require_once 'logVerification.php' ?>
+<?php require_once 'function.php' ?>
 <!DOCTIPE html>
 <html>
   <head>
@@ -20,9 +20,7 @@
           <tr>
               <td>Содержание:</td>
               <td>
-                  <textarea class="text" name="add_text">
-                      <?php echo getFromPost('add_text') ?>
-                  </textarea>                
+                  <textarea class="text" name="add_text"><?php echo getFromPost('add_text') ?></textarea>                
               </td>
           </tr>
       </table>

@@ -1,3 +1,5 @@
+<?php require_once 'logVerification.php' ?>
+
 <!DOCTIPE html>
 <html>
   <head>
@@ -7,10 +9,10 @@
   <body>
     <?php
     require_once 'function.php';
-    require_once 'logVerification.php';
     $id = filter_input(INPUT_GET, 'id');
     $where = sprintf('id="%d"', $id);
     $books = mysqlSelect('books', '*', $where);
+    mysqlConnect();
     foreach ($books as $book)
     {
       $name   = $book['name'];
@@ -31,9 +33,7 @@
             <tr>
                 <td>Содержание:</td>
                 <td>
-                    <textarea class="text" name="text">
-                        <?php echo getFromPost('text') ? getFromPost('text') : $text ?>
-                    </textarea>                
+                    <textarea class="text" name="text"><?php echo getFromPost('text') ? getFromPost('text') : $text ?></textarea>                
                 </td>
             </tr>
         </table>

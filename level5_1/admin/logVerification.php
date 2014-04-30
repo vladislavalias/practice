@@ -1,7 +1,9 @@
 <?php
+session_start();
 
 if(!$_SESSION['login'])
 {
-    header("Location: http://level5_1/admin/index.php");
+    header("Location: /level5_1/admin/index.php");
 }
+
 
