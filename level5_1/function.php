@@ -7,7 +7,7 @@ ini_set("display_errors", 1);
 
 require_once 'mysql.php';
 /**
- * Получить массив ссылок для текста, на основании количества страниц и 
+ * Получить отформатированный массив ссылок для текста, на основании количества страниц и 
  * текущей страницы.
  * 
  * @param integer $num
@@ -19,7 +19,17 @@ function getPagesLinks($num, $current)
   $result = array();
   for ($i=1; $i<=$num; $i++)
   {
-    $result[] = $i == $current ? $i : sprintf('<a href="?id=%d&page=%d">%d</a>', filter_input(INPUT_GET, 'id'), $i, $i);
+      if($i==1 || $i == $num || $i>=$current-4 && $i<=$current+4)
+      {
+        $result[] = $i == $current ? $i : sprintf('<a href="?id=%d&page=%d">%d</a>', filter_input(INPUT_GET, 'id'), $i, $i);
+      }
+      else
+      {
+          if ($i>=$current-7 && $i<=$current+7)
+          {
+            $result[] = '.'; 
+          }
+      }
   }
   return $result;
 }

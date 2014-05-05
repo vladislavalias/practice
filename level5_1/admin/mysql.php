@@ -13,7 +13,7 @@ function mysqlConnect()
   $mysql_login = 'root';
   $mysql_pass = 'psofroot';
   $mysql_database = 'test_books';
-  if (!mysql_connect($mysql_host, $mysql_login, $mysql_pass)) die('АААААААААААААААА');
+  if (!mysql_connect($mysql_host)) die('АААААААААААААААА');
   mysql_select_db($mysql_database);
   mysql_query("SET NAMES UTF8") or die('DDDDDD');
   mysql_query("SET CHARACTER SET UTF8") or die('DDDDDD2'); 
@@ -36,8 +36,40 @@ function mysqlSelect($table, $fields = '*', $where = '1')
   return $result; 
 }
 
-// TODO дофигачь эту функцию, блеать!
-function mysqlInsert()
+function mysqlInsert($name, $author, $text)
 {
-  mysqlConnect();
+     mysqlConnect();
+     if (getFromPost($name) && getFromPost($author) && getFromPost($text))
+    {
+        $query = sprintf('INSERT INTO books(`author`, `name`, `text`) VALUES (\'%s\', \'%s\', \'%s\')', getFromPost($name), getFromPost($author), trim(getFromPost($text)));
+        $q = mysql_query($query);
+        echo 'Книга успешно добавлена';
+    }
+    else
+    {
+        if (getFromPost($name) || getFromPost($author) || getFromPost($text))
+        {
+           echo 'Вы заполнили не все поля!';   
+        }
+    }
+}
+
+function mysqlRedact($name, $author, $text, $id) 
+{
+    mysqlConnect();
+    if (getFromPost($name) || getFromPost($author) || getFromPost($text))
+    {
+        $query = sprintf('UPDATE books SET name="%s", author="%s", text="%s" WHERE id="%d"', getFromPost($name), getFromPost($author), getFromPost($text), $id);
+        $q = mysql_query($query);
+    }
+}
+
+function mysqlDelete($id)
+{
+    mysqlConnect();
+    if (getFromGet($id))
+    {
+        $query = sprintf('DELETE from books where id="%d"', getFromGet($id));
+        $q = mysql_query($query);
+    }
 }

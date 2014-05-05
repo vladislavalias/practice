@@ -21,3 +21,9 @@ function getFrom($getFrom, $name, $default = false)
 {   
   return (filter_input($getFrom, $name)) ? filter_input($getFrom, $name) : $default;
 }
+
+function dump($values, $exit = false)
+{
+  var_dump($values);
+  if ($exit) exit();
+}

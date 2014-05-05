@@ -44,8 +44,8 @@
   
   .text {
       border: 1px solid black;
-      width: 600px;
-      height: 1000px;
+      width: 800px;
+      height: 300px;
       margin: 20px auto 0px;
       padding: 10px;
       text-align: justify;

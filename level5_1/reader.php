@@ -11,15 +11,16 @@
     init($_SESSION, array('on_page_sentenses' => 5, 'on_page_words' => '-', 'show_type' => 'sentenses'));
     saveNewParameters(array('on_page_sentenses', 'on_page_words'));
     
-    $idBook = idBook('id', 0);
+    $idBook         = idBook('id', 0);
     $currentPage    = getFromPost('current_page', getFromGet('page', 1));
     $_SESSION['id'] = $idBook;
     $allDataFromSql = getTextFromSql('books', $idBook);
     $allText        = getTextByType($allDataFromSql, getDelimeterType());
     $content        = getContent($allText, $currentPage, getDelimeter());
-    $pages          = getPagesLinks(getPagesCount($allText, getDelimeter()), $currentPage);
+    $numberPage     = getPagesCount($allText, getDelimeter());
+    $pages          = getPagesLinks($numberPage, $currentPage);
     $textSeparator  = 'sentenses' == getDelimeterType() ? '.' : ' ';
-    if ($currentPage > count($pages)) $currentPage = 0;
+    if ($currentPage > $numberPage) $currentPage = 0;
     ?>
 
     <form action="reader.php?id=<?php echo $idBook ?>" method="post">
@@ -42,7 +43,6 @@
     </form>
 
     <div class="text" > <?php echo $idBook != 0 && $currentPage != 0 ? formatArray($content, $textSeparator).$textSeparator : 'Нет такой книги или страницы, БЛЕАТЬ! Хватит меня ломать!' ?> </div> 
-
 
     <form action="reader.php?id=<?php echo $idBook ?>" method="post">
       <div class="pages">
