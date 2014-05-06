@@ -217,7 +217,7 @@ function getFromPost($name, $default = false)
 }
 
 function getFrom($getFrom, $name, $default = false)
-{   
+{
   return (filter_input($getFrom, $name)) ? filter_input($getFrom, $name) : $default;
 }
 
@@ -242,7 +242,7 @@ function redirectOnPage($id)
 function dump($var, $exit = true)
 {
   var_dump($var);
-  $exit ? exit() : false;
+  if ($exit) { exit(); }
 }
 
 function getBooks()
@@ -250,18 +250,9 @@ function getBooks()
   return mysqlSelect('books');
 }
 
-function avalibleId($query, $name, $default = false)
+function getBook($id)
 {
-  return $query == getFrom(INPUT_GET, $name, $default) ?  getFrom(INPUT_GET, $name, $default) : 0;
-}
-
-function idBook($name, $default = false)
-{
-    $books = getBooks();
-    foreach ($books as $book):
-    $idBook         = avalibleId($book[$name], $name, $default);
-    if ($idBook != 0)        break;
-    endforeach;
-    
-    return $idBook;
+  $where = sprintf('id = "%d"', $id);
+  
+  return mysqlSelectOne('books', '*', $where);
 }

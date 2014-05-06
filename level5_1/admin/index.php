@@ -2,9 +2,10 @@
 header("content-type: text/html;charset=utf-8");
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
+
+
 session_start();
 require_once 'function.php';
-
 ?>
 <!DOCTYPE>
 <html>
@@ -36,13 +37,7 @@ require_once 'function.php';
           echo 'Неправильный логин/пароль!';
         }
     }
-    else
-    {
-        if (!$_SESSION['login'])
-        {
-            echo 'Введите логин/пароль!';
-        }
-    }
+
     
 
     if ($_SESSION['login'])
@@ -58,17 +53,17 @@ require_once 'function.php';
             </td>
             <td class="td_read">
               <span>
-                  <a href="/reader.php?id=<?php echo $book['id'] ?>" style="color: white">Читать</a>
+                  <a href="/level5_1/reader.php?id=<?php echo $book['id'] ?>" style="color: white">Читать</a>
               </span>
             </td>
             <td class="td_read">
               <span>
-                  <a href="/admin/redact.php?id=<?php echo $book['id'] ?>" style="color: white">Редактировать</a>
+                  <a href="redact.php?id=<?php echo $book['id'] ?>" style="color: white">Редактировать</a>
               </span>
             </td>
             <td class="td_delete">
               <span>
-                  <a href="/admin/delete.php?id=<?php echo $book['id'] ?>" style="color: white">Удалить</a>
+                  <a href="delete.php?id=<?php echo $book['id'] ?>" style="color: white">Удалить</a>
               </span>
             </td>
           </tr>

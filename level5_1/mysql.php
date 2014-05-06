@@ -40,8 +40,3 @@ function mysqlSelectOne($table, $fields = '*', $where = '1')
   
   return 1 == sizeof($result) ? array_shift($result) : $result; 
 }
-
-function getTextFromSql($table, $id)
-{
-  return mysqlSelectOne($table, '*', sprintf('id = %s', $id));
-}

@@ -11,10 +11,10 @@
     init($_SESSION, array('on_page_sentenses' => 5, 'on_page_words' => '-', 'show_type' => 'sentenses'));
     saveNewParameters(array('on_page_sentenses', 'on_page_words'));
     
-    $idBook         = idBook('id', 0);
+    $idBook         = getFromGet('id', 0);
     $currentPage    = getFromPost('current_page', getFromGet('page', 1));
     $_SESSION['id'] = $idBook;
-    $allDataFromSql = getTextFromSql('books', $idBook);
+    $allDataFromSql = getBook($idBook);
     $allText        = getTextByType($allDataFromSql, getDelimeterType());
     $content        = getContent($allText, $currentPage, getDelimeter());
     $numberPage     = getPagesCount($allText, getDelimeter());
