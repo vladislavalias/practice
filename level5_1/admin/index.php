@@ -3,9 +3,9 @@ header("content-type: text/html;charset=utf-8");
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-
 session_start();
 require_once 'function.php';
+
 ?>
 <!DOCTYPE>
 <html>
@@ -16,36 +16,50 @@ require_once 'function.php';
   <body>
 
     <?php
+    if (!isset($_SESSION['permission']))
+    {
+      $_SESSION['permission'] = 1;
+    }
     if (!isset($_SESSION['login']))
     {
       $_SESSION['login'] = 0;
     }
-
-    $login = trim(getFromPost('name'));
+    $login = addslashes(trim(getFromPost('name')));
     $pass  = trim(getFromPost('pass'));
     $where = $login ? sprintf('admin="%s" AND pass="%s"', $login, md5($pass)) : 1;
-    $user  = mysqlSelect('admins', '*', $where);
+    $user  = array_pop(mysqlSelect('admins', '*', $where));
+    $permission = $user['Permission'];
+    $currentPage = getFromGet('page_books_show', 1);
+    $pages = getPagesLinks(getPagesCount(mysqlSelect('books')), $currentPage);
     
     if ($login || $pass)
     {
         if (count($user) != 0)
         {
           $_SESSION['login'] = $login;
+          $_SESSION['permission'] = $permission;
         }
         else
         {
           echo 'Неправильный логин/пароль!';
         }
     }
-
-    
+      ?>
+        <table>
+          <tr>
+              <td style="width: 300px"  align="center"><a href="<?php echo getUrl('user') ?>index.php">Войти как пользователь</a></td>
+              <td style="width: 1200px" align="center" <?php echo (!$_SESSION['login']) ? 'hidden="true"' : '' ?>><p>Здравствуй, <?php echo $_SESSION['login'] ?>!</p></td>
+              <td style="width: 300px"  align="center" <?php echo (!$_SESSION['login']) ? 'hidden="true"' : '' ?>><a href="<?php echo getUrl() ?>logOut.php">Выйти</a></td>
+          </tr>
+        </table>
+      <?php
 
     if ($_SESSION['login'])
     {
       ?>
       <div class="mainpanel">
           <table style="border-spacing: 0px 2px">
-          <?php $books = getBooks() ?>
+          <?php $books = getBooks($currentPage) ?>
           <?php foreach ($books as $book): ?>
           <tr class="info_book">
             <td style="width: 500px; border-radius: 15px 0px 0px 15px; padding: 10px">
@@ -53,24 +67,29 @@ require_once 'function.php';
             </td>
             <td class="td_read">
               <span>
-                  <a href="/level5_1/reader.php?id=<?php echo $book['id'] ?>" style="color: white">Читать</a>
+                  <a href="<?php echo getUrl('user') ?>reader.php?id=<?php echo $book['id'] ?>" style="color: white">Читать</a>
               </span>
             </td>
             <td class="td_read">
               <span>
-                  <a href="redact.php?id=<?php echo $book['id'] ?>" style="color: white">Редактировать</a>
+                  <a <?php if ($_SESSION['permission'] < 3) { echo 'hidden="true"'; } ?> href="<?php echo getUrl() ?>redact.php?id=<?php echo $book['id'] ?>" style="color: white">Редактировать</a>
               </span>
             </td>
             <td class="td_delete">
               <span>
-                  <a href="delete.php?id=<?php echo $book['id'] ?>" style="color: white">Удалить</a>
+                  <a <?php if ($_SESSION['permission'] < 3) { echo 'hidden="true"'; } ?>  onclick="return confirm('Жахнем?') ? true : false;" href="<?php echo getUrl() ?>delete.php?id=<?php echo $book['id'] ?>" style="color: white">Удалить</a>
               </span>
             </td>
           </tr>
           <?php endforeach ?>
+          <tr>
+              <td colspan="10" align="center">
+                <?php echo formatArray($pages, "&nbsp;\n") ?>
+              </td>
+          </tr>
           <td colspan="4">
             <span>
-              <a href="/admin/new_book.php" style="color: white; padding-left: 40%">Добавить новую книгу</a>
+              <a <?php if ($_SESSION['permission'] < 3) { echo 'hidden="true"'; } ?> href="/admin/new_book.php" style="color: black; padding-left: 40%">Добавить новую книгу</a>
             </span>
           </td>
         </table> 
@@ -102,6 +121,9 @@ require_once 'function.php';
         <?php
     }
     ?>
-      <a href="/index.php">Войти как пользователь</a>
+      
+      
   </body>
 </html>
+
+    

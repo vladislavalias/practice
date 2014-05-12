@@ -55,10 +55,11 @@ function formatArray($array, $format = "\n<br />")
  * @param integer $onPage
  * @return integer
  */
-function getPagesCount($all, $onPage)
+function getPagesCount($all, $onPage = 10)
 {
   return ceil(sizeof($all) / $onPage );
 }
+
 
 /**
  * Сохранить требуемый тип показа.
@@ -250,9 +251,32 @@ function getBooks()
   return mysqlSelect('books');
 }
 
+function getBooks2($number)
+{
+  return mysqlSelect('books', '*', sprintf('1 LIMIT %d, 10', ($number - 1) * 10));
+}
+
 function getBook($id)
 {
   $where = sprintf('id = "%d"', $id);
   
   return mysqlSelectOne('books', '*', $where);
+}
+
+/**
+ * Получить отформатированный массив ссылок для текста, на основании количества страниц и 
+ * текущей страницы.
+ * 
+ * @param integer $num
+ * @param integer $current
+ * @return array
+ */
+function getPagesLinks2($num, $current)
+{
+  $result = array();
+  for ($i=1; $i<=$num; $i++)
+  {
+    $result[] = $i == $current ? $i : sprintf('<a href="?page_books_show=%d">%d</a>', $i, $i);
+  }
+  return $result;
 }

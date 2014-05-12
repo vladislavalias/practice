@@ -1,5 +1,5 @@
 <?php require_once 'function.php' ?>
-<?php    redirectOnPage('current_page') ?>
+<?php redirectOnPage('current_page') ?>
 
 <!DOCTYPE html>
 <html>

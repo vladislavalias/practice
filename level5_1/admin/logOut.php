@@ -1,7 +1,6 @@
 <?php
-require_once 'logVerification.php';
+session_start();
 require_once 'function.php';
 
-mysqlDelete('id');
+$_SESSION['login'] = 0;
 header(sprintf("Location: %sindex.php", getUrl()));
-

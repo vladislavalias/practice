@@ -39,7 +39,7 @@
   }
   
   html {
-      background-color: #AFD0FF;
+/*      background-color: #AFD0FF;*/
   }
   
   .text {
@@ -50,4 +50,10 @@
       padding: 10px;
       text-align: justify;
       background-color: white;
+  }
+  
+  .to-center {
+    float: left;
+    width: 540px;
+    overflow: hidden;
   }

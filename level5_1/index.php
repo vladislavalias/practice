@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
-  
+  <?php
+  $currentPage = getFromGet('page_books_show', 1);
+  $pages       = getPagesLinks2(getPagesCount(mysqlSelect('books')), $currentPage);
+  ?>
   <body>
     <div class="mainpanel">
       <table style="border-spacing: 0px 2px">
-        <?php $books = getBooks() ?>
+        <?php $books = getBooks2($currentPage) ?>
         <?php foreach ($books as $book): ?>
         <tr class="info_book">
           <td style="width: 500px; border-radius: 15px 0px 0px 15px; padding: 10px">
@@ -22,6 +25,11 @@
           </td>
         </tr>
         <?php endforeach ?>
+          <tr>
+              <td colspan="10" align="center">
+                <?php echo formatArray($pages, "&nbsp;\n") ?>
+              </td>
+          </tr>
       </table>
   </body>
 </html>
