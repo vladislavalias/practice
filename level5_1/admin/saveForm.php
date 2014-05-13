@@ -3,6 +3,7 @@ require_once 'logVerification.php';
 require_once 'function.php';
 
 // edit же
+// TODO: переименовать функцию  на edit
 mysqlRedact('name', 'author', 'text', $id);
 
 

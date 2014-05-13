@@ -4,7 +4,9 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 session_start();
-require_once 'function.php';
+$_SESSION['user']['permission'] = array('ROLE_BOOK_SHOW', 'ROLE_AUTHOR_SHOW', 'ROLE_SUPER_ADMIN');
+var_dump($_SESSION);
+require_once 'modules/lib/loadLib.php';
 
 ?>
 <!DOCTYPE>
@@ -26,18 +28,17 @@ require_once 'function.php';
     }
     $login = addslashes(trim(getFromPost('name')));
     $pass  = trim(getFromPost('pass'));
-    $where = $login ? sprintf('admin="%s" AND pass="%s"', $login, md5($pass)) : 1;
-    $user  = array_pop(mysqlSelect('admins', '*', $where));
-    $permission = $user['Permission'];
     $currentPage = getFromGet('page_books_show', 1);
     $pages = getPagesLinks(getPagesCount(mysqlSelect('books')), $currentPage);
     
     if ($login || $pass)
     {
+        $where = $login ? sprintf('admin="%s" AND pass="%s"', $login, md5($pass)) : 1;
+        $user  = mysqlSelectOne('admins', '*', $where);
         if (count($user) != 0)
         {
           $_SESSION['login'] = $login;
-          $_SESSION['permission'] = $permission;
+          $_SESSION['permission'] = $user['permission'];
         }
         else
         {
@@ -88,8 +89,11 @@ require_once 'function.php';
               </td>
           </tr>
           <td colspan="4">
+            <?php echo userGetMenu() ?>
             <span>
-              <a <?php if ($_SESSION['permission'] < 3) { echo 'hidden="true"'; } ?> href="/admin/new_book.php" style="color: black; padding-left: 40%">Добавить новую книгу</a>
+              <?php if ($_SESSION['permission'] > 3): ?>
+                <a href="<?php echo getUrl() ?>new_book.php" style="color: black; padding-left: 40%">Добавить новую книгу</a>
+              <?php endif; ?>
             </span>
           </td>
         </table> 
@@ -97,8 +101,7 @@ require_once 'function.php';
       <?php
     }
 
-    if (!$_SESSION['login'])
-    {
+    if (!$_SESSION['login']):
       ?>
         <form action="index.php" method="post">
           <div class="admin_panel">
@@ -118,9 +121,7 @@ require_once 'function.php';
             </table>
           </div>
         </form>
-        <?php
-    }
-    ?>
+        <?php endif; ?>
       
       
   </body>
