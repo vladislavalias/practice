@@ -1,5 +1,5 @@
 <?php require_once 'function.php' ?>
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
