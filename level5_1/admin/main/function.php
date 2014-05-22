@@ -126,3 +126,8 @@ function permission($user, $name = FALSE)
         return FALSE;
     }
 }
+
+function includeFilesByQuery ()
+{
+  
+}
