@@ -16,7 +16,7 @@
         <?php foreach ($books as $book): ?>
         <tr class="info_book">
           <td style="width: 500px; border-radius: 15px 0px 0px 15px; padding: 10px">
-            <?php echo $book['name'].', '.$book['author'] ?> 
+            <?php echo $book['name'].', '.$book['author_id'] ?> 
           </td>
           <td class="td_read">
             <span>
