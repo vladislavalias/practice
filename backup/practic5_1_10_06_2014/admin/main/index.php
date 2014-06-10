@@ -34,8 +34,13 @@ require_once 'function.php';
     $allUserData = mysqlSelect('admins');
     $allAuthorsData = mysqlSelect('authors');
     $allBooksData = mysqlSelect('books');
+    $userRights = array();
+    if ($_SESSION['login'])
+    {
     $user  = $arrayUserData ? array_shift($arrayUserData) : FALSE;
-    $userRights = $user ? unserialize($user['permission']) : unserialize($_SESSION['permission']);
+    $userRights = $user ? unserialize($user['permission']) : unserialize($_SESSION['permission']); 
+    }
+
     // TODO Переделать, чтобы массив заполнялся в зависимости от кол-ва эл-тов models
     $models = array('books' => 'Книги', 'authors' => 'Авторы', 'admins' => 'Админы');
     $action = array('show', 'edit', 'delete');
@@ -56,7 +61,6 @@ require_once 'function.php';
       ?>
         <table>
           <tr>
-                        <?php dump(getUrlForRead()) ?>
             <td style="width: 300px"  align="center"><a href="<?php echo getUrl('user') ?>index.php">Войти как пользователь</a></td>
               <td style="width: 1200px" align="center" <?php echo (!$_SESSION['login']) ? 'hidden="true"' : '' ?>><p>Здравствуй, <?php echo $_SESSION['login'] ?>!</p></td>
               <td style="width: 300px"  align="center" <?php echo (!$_SESSION['login']) ? 'hidden="true"' : '' ?>><a href="<?php echo getUrl() ?>logOut.php">Выйти</a></td>
@@ -114,7 +118,7 @@ require_once 'function.php';
 foreach ($models as $key => $value)
 {
   if (permission(modelRights($key, 'show'), $userRights))
-  {
+  {    
       if (getFromGet('what') == $key)
       {
           require_once sprintf('models/%s.php', $key);

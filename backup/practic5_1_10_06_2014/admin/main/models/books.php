@@ -1,8 +1,8 @@
 <?php if (getFromGet('action') == 'show' || 'edit' || 'delete'): ?>
 <table>
-<?php  foreach ($allAuthorsData as $AuthorData): ?>
+<?php  foreach ($allBooksData as $BookData): ?>
   <tr>
-    <td><?php echo $AuthorData['firstname'].', '.$AuthorData['lastname'] ?></td>
+    <td><?php echo $BookData['name'] ?></td>
   
   <?php if (getFromGet('action') == 'edit'): ?> 
     <td>Редактировать</td>
@@ -14,4 +14,4 @@
   </tr>
  <?php endif; ?> 
 </table>
-<a href="<?php echo getUrl('index.php') ?>">Вернутся к списку действий</a>
+<a href="<?php echo getUrl('index.php') ?>">Вернуться к списку действий</a>
