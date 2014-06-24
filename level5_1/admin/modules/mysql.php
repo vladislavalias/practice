@@ -8,7 +8,7 @@ function mysqlConnect()
   $mysql_database = 'test_books';
   
   if (!mysql_connect($mysql_host)) die('АААААААААААААААА');
-  mysql_select_db($mysql_database);
+  if (!mysql_select_db($mysql_database))      die('Невозможно подключиться к выбранной базе');
   mysql_query("SET NAMES UTF8") or die('DDDDDD');
   mysql_query("SET CHARACTER SET UTF8") or die('DDDDDD2'); 
   return true;
