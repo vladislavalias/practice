@@ -1,22 +1,19 @@
 <?php
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 session_start();
-if (!isset($_SESSION['login'])) $_SESSION['login'] = '';
 
 require_once realpath(__DIR__) . '/modules/loadModules.php';
 
-if(!$_SESSION['login'])
-{
-    require_once realpath(__DIR__) . '/sign_form.php';
-    exit();
-}
 ?>
 
-<div class="title"><a href="/../index.php">Войти как пользователь</a>
-<?php echo ($_SESSION['login']) ? 'Здравствуй, '. $_SESSION['login'] : '' ?>
-<?php echo ($_SESSION['login']) ? '<a href="logOut.php">Выйти</a>' : '' ?></div>
+<div class="title"><a href="../index.php">Войти как пользователь</a>
+<?php echo (isAuthenticated()) ? 'Здравствуй, '. $_SESSION['login'] : '' ?>
+<?php echo (isAuthenticated()) ? '<a href="log_out.php">Выйти</a>' : '' ?></div>
 
 <?php
 
+require_once '';
 if (!checkPermission(getModule(), getAction()))
 {
 //  echo showPermissionError();

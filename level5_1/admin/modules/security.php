@@ -1,21 +1,26 @@
 <?php
 
-//if (!isAuthenticated())
-//{
-//  $errors = false;
-//  
-//  if (loginFormSubmitted())
-//  {
-//    $errors = loginUser();
-//  }
-//  
-//  showLoginForm($errors);
-//  exit();
-//}
+if (!isAuthenticated())
+{
+  $errors = false;
+  
+  
+  if (loginFormSubmitted())
+  {
+    $errors = loginUser();
+    if(!$errors)
+    {
+      redirectOnPage('index.php');
+    }
+  }
+  
+  showLoginForm($errors);
+  exit();
+}
 
 function showLoginForm($errors)
 {
-//  TODO: показывать форму логина.
+  require_once realpath(__DIR__) . '/../sign_form.php';
 }
 
 function checkPermission($module, $action)
@@ -44,4 +49,69 @@ function getModule()
 function getAction()
 {
     return filter_input(INPUT_GET, 'action');
+}
+
+function isAuthenticated()
+{
+  return (bool)getFromSession('login');
+}
+
+function loginFormSubmitted()
+{
+  return getFromPostArray('login_form');
+}
+
+function isLoginFormValid()
+{
+  $validateData = array_intersect_key(
+    (array)getFromPostArray('login_form'),
+    array_flip(getLoginFormFields())
+  );
+  
+  $cleared = array_diff($validateData, array('', false, null));
+  
+  return sizeof($cleared) == sizeof(getLoginFormFields());
+  
+  //TODO: Переделать с проверкой по ключам данных из поста на валидность
+  // 
+}
+
+function loginUser()
+{
+  $error = '';
+  $loginForm = getFromPostArray('login_form'); 
+  $login = addslashes(trim($loginForm['name']));
+  $pass  = trim($loginForm['pass']);
+  $where = $login ? sprintf('admin="%s" AND pass="%s"', $login, md5($pass)) : 0;
+  $arrayUserData = mysqlSelect('admins', '*', $where);
+  $user = array_pop($arrayUserData);
+
+  
+  if ($login || $pass)
+  {
+      if ($user)
+      {
+        $_SESSION['login'] = $login;
+        $_SESSION['permission'] = $user['permission'];
+      }
+      else
+      {
+        $error = 'Неправильный логин/пароль!';
+      }
+  }
+  
+  return $error;
+}
+
+function redirectOnPage($adress)
+{
+  header(sprintf('Location: /level5_1/admin/%s', $adress));
+}
+
+function getLoginFormFields()
+{
+  return array(
+      'name',
+      'pass'
+      );
 }
