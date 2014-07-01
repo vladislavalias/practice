@@ -1,6 +1,6 @@
 <?php
 
-$authors = mysqlSelect(getFromGet('what'));
+
 $edit_authors = getFromPostArray('authors_edit');
 $add_authors = getFromPostArray('authors_add');
 
@@ -11,6 +11,8 @@ if (getFromGet('action', 'show') == 'delete') //проверяем, была л�
         echo 'Автор удален<br />';
     }
 }
+
+$authors = mysqlSelect(getFromGet('what'));
 
 if (getFromGet('action', 'show') == 'add')
 {

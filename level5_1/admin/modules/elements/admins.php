@@ -18,17 +18,24 @@ if (getFromGet('action', 'show') == 'add')
     <form action="index.php?what=<?php echo getFromGet('what') ?>&action=<?php echo getFromGet('action', 'show') ?>" method="post">
     Логин:<input type="text" name="<?php echo getFromGet('what') ?>_add[admin]" value="<?php echo $add_admins['admin'] ?>"><br />
     Пароль:<input type="text" name="<?php echo getFromGet('what') ?>_add[pass]" value="<?php echo $add_admins['pass'] ?>"><br />
+    Права доступа: 
+    <select name="<?php echo getFromGet('what') ?>_add[permission]">
+      <option disabled>Выберите права</option>
+      <option value="superadmin">Админ</option>
+      <option value="moder">Модератор</option>
+      <option value="user">Пользователь</option>
+    </select><br />
     <input type="submit" value="Добавить">
     </form>
     <?php
 }
 
-if ($edit_admins['admin'] && $edit_admins['old_pass'] && $edit_admins['pass'] && $edit_admins['confirm_pass']) 
+if ($edit_admins['admin'] && $edit_admins['pass'] && $edit_admins['permission']) 
 {
-    dump($edit_admins);
-    updateAdmin($edit_admins);// если были отправлены постом данные на редактирование и поля  не пустые, вносим изменения в базу
-//    $q = mysqlUpdate(getFromGet('what'), $edit_admins, getFromGet('id', 1));
-//    echo 'Информация успешно изменена';
+    if(mysqlUpdateAdmin(getFromGet('what'), $edit_admins, getFromGet('id', 0)))
+    {
+      echo 'Информация успешно изменена';
+    }
 }
 elseif ($edit_admins) 
 {
@@ -38,16 +45,16 @@ elseif ($edit_admins)
 
 if ($add_admins['admin'] && $add_admins['pass']) 
 {
-    // если были отправлены постом данные на добавление и поля имя, фамилия не пустые, добавляем в базу
-    if (mysqlInsert(getFromGet('what'), $add_authors))
+    // если были отправлены постом данные на добавление и поля не пустые, добавляем в базу
+    if (mysqlInsertAdmin(getFromGet('what'), $add_admins))
     {
-        echo 'Автор успешно добавлен';
+        echo 'Админ успешно добавлен';
     }
 }
 elseif ($add_admins) 
 {
-    // если были отправлены постом данные на редактирование, но поле имя или фамилия пустые, возвращаем сообщение об ошибке
-    echo 'Поля Имя/Фамилия не могут быть пустыми!';
+    // если были отправлены постом данные на редактирование, но поля пустые, возвращаем сообщение об ошибке
+    echo 'Поля  не могут быть пустыми!';
 }
 
 if (getFromGet('action', 'show') == 'show' || getFromGet('action', 'show') == 'delete') 
@@ -72,9 +79,14 @@ if (getFromGet('action', 'show') == 'edit')
     ?>
     <form action="index.php?what=<?php echo getFromGet('what') ?>&action=<?php echo getFromGet('action', 'show') ?>&id=<?php echo getFromGet('id', 0) ?>" method="post">
     Логин:<input type="text" name="<?php echo getFromGet('what') ?>_edit[admin]" value="<?php echo $admin['admin'] ?>"><br />
-    Старый пароль:<input type="password" name="<?php echo getFromGet('what') ?>_edit[old_pass]" value=""><br />
     Новый пароль:<input type="password" name="<?php echo getFromGet('what') ?>_edit[pass]" value=""><br />
-    Повтор пароля:<input type="password" name="<?php echo getFromGet('what') ?>_edit[confirm_pass]" value=""><br />
+    Права доступа: 
+    <select name="<?php echo getFromGet('what') ?>_edit[permission]">
+      <option disabled>Выберите права</option>
+      <option value="superadmin">Админ</option>
+      <option value="moder">Модератор</option>
+      <option value="user">Пользователь</option>
+    </select><br />
     <input type="submit" value="Редактировать">
     </form>
     <?php

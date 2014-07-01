@@ -105,7 +105,7 @@ function loginUser()
 
 function redirectOnPage($adress = '')
 {
-  header(sprintf('Location: /admin/%s', $adress));
+  header(sprintf('Location: %s', $adress));
 }
 
 function getLoginFormFields()

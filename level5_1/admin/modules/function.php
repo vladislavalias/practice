@@ -33,11 +33,11 @@ function dump($expression, $exit = true)
   if ($exit) exit(); 
 }
 
-function updateAdmin($arrayPostData)
+function adminRightsTemplate ()
 {
-    //TODO: проверяем, верно ли указан старый пароль:
-    // нет - сообщение об ошибке,
-    // да - проверяем, совпадает ли пароль и подтверждение пароля,
-    // нет - сообщение об ошибке,
-    // да - вносим изменения в базу
+  return array(
+    'superadmin' => 'a:1:{i:0;s:22:"PERMISSION_SUPER_ADMIN";}',
+    'moder'      => 'a:5:{i:0;s:21:"PERMISSION_BOOKS_EDIT";i:1;s:23:"PERMISSION_AUTHORS_EDIT";i:2;s:23:"PERMISSION_AUTHORS_SHOW";i:3;s:21:"PERMISSION_BOOKS_SHOW";i:4;s:22:"PERMISSION_ADMINS_SHOW";}',
+    'user'       => 'a:3:{i:0;s:23:"PERMISSION_AUTHORS_SHOW";i:1;s:21:"PERMISSION_BOOKS_SHOW";i:2;s:22:"PERMISSION_ADMINS_SHOW";}'
+  );
 }
