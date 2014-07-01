@@ -40,3 +40,39 @@ function mysqlSelectOne($table, $fields = '*', $where = '1')
   
   return 1 == sizeof($result) ? array_shift($result) : $result; 
 }
+
+function mysqlUpdate ($table, $what, $id)
+{
+    foreach ($what as $key => $value)
+    {
+        $changes[] = sprintf('`%s`=\'%s\'', $key, addslashes($value));
+    }
+    $string_changes = implode(', ', $changes);
+    $query = sprintf('UPDATE `%s` SET %s WHERE id=%d', $table, $string_changes, $id);
+    $q = mysql_query($query);
+}
+
+function mysqlDelete($table, $id)
+{
+    $query = sprintf('DELETE FROM `%s` WHERE id=%d', $table, $id);
+    $q = mysql_query($query);
+    return $q;
+    //TODO: переделать так, чтобы функция возвращала TRUE только при УДАЛЕНИИ элемента,
+    // а не в случае успешно выполненого запроса
+}
+
+function mysqlInsert($table, $arrayData)
+{
+    $data = array();
+    foreach ($arrayData as $value)
+    {
+        $data[] = sprintf('\'%s\'', addslashes($value));
+    }
+    $values = implode(', ', $data);
+    $arrayKeys = array_flip($arrayData);
+    $keys = implode(', ', $arrayKeys);
+    $query = sprintf('INSERT INTO `%s` (%s) VALUES (%s)', $table, $keys, $values);
+    $q = mysql_query($query);
+    return $q;
+}
+

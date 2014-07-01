@@ -28,7 +28,7 @@ function checkPermission($module, $action)
   $userPermissions = unserialize($_SESSION['permission']);
 //  TODO: логика по созданию ключа доступа на основании текущего запроса
 //  т.е. типа ROLE_BOOK_EDIT т.е. создание строки
-  if (!$module && !$action)
+  if (!$module || in_array('PERMISSION_SUPER_ADMIN', $userPermissions))
   {
       return TRUE;
   }
@@ -48,7 +48,7 @@ function getModule()
 
 function getAction()
 {
-    return filter_input(INPUT_GET, 'action');
+    return getFromGet('action', 'show');
 }
 
 function isAuthenticated()
@@ -103,9 +103,9 @@ function loginUser()
   return $error;
 }
 
-function redirectOnPage($adress)
+function redirectOnPage($adress = '')
 {
-  header(sprintf('Location: /level5_1/admin/%s', $adress));
+  header(sprintf('Location: /admin/%s', $adress));
 }
 
 function getLoginFormFields()

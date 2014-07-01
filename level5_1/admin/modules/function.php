@@ -10,16 +10,16 @@ function getFromPostArray($name, $filter = FILTER_DEFAULT)
   return getFrom(INPUT_POST, $name, $filter, FILTER_REQUIRE_ARRAY);
 }
 
-function getFromPost($name)
+function getFromPost($name, $default = '')
 {
   $getFrom = getFrom(INPUT_POST, $name);
-  return $getFrom ? $getFrom : '';
+  return $getFrom ? $getFrom : $default;
 }
 
-function getFromGet($name)
+function getFromGet($name, $default = '')
 {
   $getFrom = getFrom(INPUT_GET, $name);
-  return $getFrom ? $getFrom : '';
+  return $getFrom ? $getFrom : $default;
 }
 
 function getFromSession($name)
@@ -33,3 +33,11 @@ function dump($expression, $exit = true)
   if ($exit) exit(); 
 }
 
+function updateAdmin($arrayPostData)
+{
+    //TODO: проверяем, верно ли указан старый пароль:
+    // нет - сообщение об ошибке,
+    // да - проверяем, совпадает ли пароль и подтверждение пароля,
+    // нет - сообщение об ошибке,
+    // да - вносим изменения в базу
+}

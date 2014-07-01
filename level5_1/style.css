@@ -23,7 +23,7 @@ and open the template in the editor.
   }
   
   input {
-    width: 25px;
+    width: 125px;
   }
   form {
     margin: 0px;
@@ -83,4 +83,9 @@ and open the template in the editor.
   
   html {
 /*      background-color: #AFD0FF;*/
+  }
+  
+  textarea {
+      width: 350px;
+      height: 100px;
   }
