@@ -1,6 +1,5 @@
 <?php
 
-$admins = mysqlSelect(getFromGet('what'));
 $edit_admins = getFromPostArray(sprintf('%s_edit', getFromGet('what'))); 
 $add_admins = getFromPostArray(sprintf('%s_add', getFromGet('what')));
 
@@ -11,6 +10,8 @@ if (getFromGet('action', 'show') == 'delete') //проверяем, была л�
         echo 'Админ удален<br />';
     }
 }
+
+$admins = mysqlSelect(getFromGet('what'));
 
 if (getFromGet('action', 'show') == 'add')
 {

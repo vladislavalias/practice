@@ -16,11 +16,11 @@
         <?php foreach ($books as $book): ?>
         <tr class="info_book">
           <td style="width: 500px; border-radius: 15px 0px 0px 15px; padding: 10px">
-            <?php echo $book['name'].', '.$book['author_id'] ?> 
+            <?php echo $book['bookname'].', '.$book['firstname'].'_'.$book['secondname'] ?> 
           </td>
           <td class="td_read">
             <span>
-                <a href="reader.php?id=<?php echo $book['id'] ?>" style="color: white">Читать</a>
+                <a href="reader.php?id=<?php echo $book['book_id'] ?>" style="color: white">Читать</a>
             </span>
           </td>
         </tr>

@@ -51,6 +51,16 @@ function mysqlUpdate ($table, $what, $id)
     $query = sprintf('UPDATE `%s` SET %s WHERE id=%d', $table, $string_changes, $id);
     $q = mysql_query($query);
 }
+function mysqlUpdateBooks ($table, $what, $id)
+{
+    foreach ($what as $key => $value)
+    {
+        $changes[] = sprintf('`%s`=\'%s\'', $key, addslashes($value));
+    }
+    $string_changes = implode(', ', $changes);
+    $query = sprintf('UPDATE `%s` SET %s WHERE book_id=%d', $table, $string_changes, $id);
+    $q = mysql_query($query);
+}
 
 function mysqlUpdateAdmin ($table, $what, $id)
 {
@@ -75,6 +85,15 @@ function mysqlUpdateAdmin ($table, $what, $id)
 function mysqlDelete($table, $id)
 {
     $query = sprintf('DELETE FROM `%s` WHERE id=%d', $table, $id);
+    $q = mysql_query($query);
+    return $q;
+    //TODO: переделать так, чтобы функция возвращала TRUE только при УДАЛЕНИИ элемента,
+    // а не в случае успешно выполненого запроса
+}
+
+function mysqlDeleteBooks($table, $id)
+{
+    $query = sprintf('DELETE FROM `%s` WHERE book_id=%d', $table, $id);
     $q = mysql_query($query);
     return $q;
     //TODO: переделать так, чтобы функция возвращала TRUE только при УДАЛЕНИИ элемента,

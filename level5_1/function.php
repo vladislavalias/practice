@@ -253,12 +253,12 @@ function getBooks()
 
 function getBooks2($number)
 {
-  return mysqlSelect('books', '*', sprintf('1 LIMIT %d, 10', ($number - 1) * 10));
+  return mysqlSelect('books, authors', '*', sprintf('books.author_id = authors.id LIMIT %d, 10', ($number - 1) * 10));
 }
 
 function getBook($id)
 {
-  $where = sprintf('id = "%d"', $id);
+  $where = sprintf('book_id = "%d"', $id);
   
   return mysqlSelectOne('books', '*', $where);
 }
