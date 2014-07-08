@@ -8,7 +8,7 @@ if (getFromGet('action', 'show') == 'delete') //проверяем, была л�
 {
     if (mysqlDelete(getFromGet('what'), getFromGet('id', 0)))
     {
-        echo 'Автор удален<br />';
+        header('Location: index.php?what=authors&action=show');
     }
 }
 

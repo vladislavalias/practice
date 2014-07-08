@@ -41,3 +41,8 @@ function adminRightsTemplate ()
     'user'       => 'a:3:{i:0;s:23:"PERMISSION_AUTHORS_SHOW";i:1;s:21:"PERMISSION_BOOKS_SHOW";i:2;s:22:"PERMISSION_ADMINS_SHOW";}'
   );
 }
+
+function headersOut()
+{
+//  TODO: выводить наши насклодированные хедеры
+}
