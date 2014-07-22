@@ -1,6 +1,5 @@
 <?php
-var_dump($_POST);
-dump(getFromPost('number', FILTER_REQUIRE_ARRAY)) ?>
+var_dump($_POST) ?>
 
 <form action="index.php" method="post">
   <div>
