@@ -96,6 +96,10 @@ function dump($value, $exit = true)
  */
 function showCalculate($numbers)
 {
+    if (!$numbers)
+    {
+        return 0;
+    }
     $firstElement = array_shift($numbers);
     $secondElement = array_shift($numbers);
     $result = $firstElement . $secondElement;
